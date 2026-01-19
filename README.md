@@ -1,6 +1,7 @@
 # Gordian Centaur Dev Technical Assessment
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Part I](#part-i)
 - [Part II](#part-iii)
@@ -9,7 +10,20 @@
 
 ---
 
-## Installation
+## Installation & Guide
+
+Install dependencies attached via `package.json`
+
+```bash
+npm install
+npx playwright install
+```
+
+Command to build and run scraper
+
+```bash
+npm run build && npm run start
+```
 
 ## Part I. Browser Automation & Scraping
 
@@ -18,7 +32,9 @@
 ## Part III. Minimal Frontend
 
 ## Part IV. Written Questions
+
 ### Task: Answer questions
+
 ➔ Answer briefly in your README:
 
 1. A scraper that worked reliably suddenly starts failing. How do you debug and stabilize it?
