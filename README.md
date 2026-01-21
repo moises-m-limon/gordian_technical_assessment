@@ -2,11 +2,12 @@
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Part I](#part-i)
-- [Part II](#part-iii)
-- [Part III](#part-iii)
-- [Part IV](#part-iv)
+- [Installation & Guide](#installation--guide)
+- [Part I](#part-i-browser-automation--scraping)
+- [Part II](#part-ii-automation-framework)
+- [Part III](#part-iii-minimal-frontend-optional)
+- [Part IV](#part-iv-written-questions)
+
 
 ---
 
@@ -79,7 +80,7 @@ Command to build and run scraper
 
 4. How would you scale this to scraper 100+ sites?
     - Since I am leveraging a SelectorMap pattern, scaling to 100+ sites becomes a configuration problem rather than a coding problem.
-        - Given my data science experience, by using an MCP (Model Context Protocol) approach, you can automate the maintenance of these maps:
-            - Use an LLM to ingest a site's HTML and output the SelectorMap object directly into your /sites/ directory.
-            - Run a validation test in CI that validates the SelectorMap against a live page before the scraper is added to the production pool.
-                - If the card selector returns 0 results during a production run, the system triggers the MCP to re-analyze the page and suggest a updated SelectorMap or manually intervene for simple adjustments.
+    - Given my data science experience, by using an MCP (Model Context Protocol) approach, you can automate the maintenance of these maps:
+        - Use an LLM to ingest a site's HTML and output the SelectorMap object directly into your /sites/ directory.
+        - Run a validation test in CI that validates the SelectorMap against a live page before the scraper is added to the production pool.
+        - If the card selector returns 0 results during a production run, the system triggers the MCP to re-analyze the page and suggest a updated SelectorMap or manually intervene for simple adjustments.
