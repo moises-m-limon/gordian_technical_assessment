@@ -39,20 +39,24 @@ Command to build and run scraper
   Runs formatting checks using Prettier to ensure consistent code style.
   Linting is included for maintainability but is not required to run the scraper.
 
-
 ## Part I. Browser Automation & Scraping
+
 - This section covers the core browser automation and scraping functionality. It includes navigation, pagination handling, and selector-driven extraction for a single site using Playwright. The focus is on correctness, stability, and clear separation between site definitions, navigation, and extraction logic.
 
 ## Part II. Automation Framework
 
+- Created A single “runner” process [run.ts](src/run.ts) that will use the interface to direct a scraper instance
+- The function `runSite(page, targetSite, query)` takes in:
+    - accepts a Playwright `Page`
+    - accepts a site definition (search URL + selectors)
+    - accepts a query string for modularity of product item
+    - returns the items extracted from the site
+
 ## Part III. Minimal Frontend (optional)
-Did not get time to work on UI component
+
+- A frontend UI was considered but intentionally deprioritized in favor of focusing on the core scraping and automation architecture. The current implementation is designed to be frontend-agnostic and could be easily integrated with a UI layer in future work.
 
 ## Part IV. Written Questions
-
-### Task: Answer questions
-
-➔ Answer briefly in your README:
 
 1. A scraper that worked reliably suddenly starts failing. How do you debug and stabilize it?
     - If a scraper is failing I would:
@@ -61,20 +65,19 @@ Did not get time to work on UI component
     - To debug and stabilize I would:
         - build out HTML screenshot logic to capture the instance where error first occured to backtrace root cause
         - reevaluate the exception logic handling to see if there are any gaps that need to be built
-
     2. Playwright tests pass locally but fail in CI. What do you investigate?
         - If a test is failing in CI I would:
             - evaulate the dependencies for potential mismatch
             - evaluate if the site has an issue with Playwright running headless in the CI
 
-3. How do you approach bot detection ethically and technically?
+2. How do you approach bot detection ethically and technically?
     - My philosophy is based on the principle of Public Accessibility. If a site serves data to the open web without a login, that data is public. I use automation tools (Playwright, Selenium) as a "high-speed browser" to gather these insights efficiently. However, I balance this by ensuring my automation does not degrade the site’s performance for human users—this means respecting the host's resources as much as the data's visibility. I have created automation pipelines to scrape information that I have access to via login for academic purposes, such as the academic platform Canvas or O'Reily to scrape and organize assignments for personal quality of life experiences.
     - I have an honest approach to using scrapers technically, by using open-source automation tools and usually sharing my work on Github. I treat bot detection as a signal to slow down, not a challenge to bypass via brute force.
 
-4. What would you refactor/improve if you had more time?
+3. What would you refactor/improve if you had more time?
     - I would work more on the UI as well as create a DB schema for the data to be easily loaded into Postgres to show off those capabilities I have as well.
 
-5. How would you scale this to scraper 100+ sites?
+4. How would you scale this to scraper 100+ sites?
     - Since I am leveraging a SelectorMap pattern, scaling to 100+ sites becomes a configuration problem rather than a coding problem.
         - Given my data science experience, by using an MCP (Model Context Protocol) approach, you can automate the maintenance of these maps:
             - Use an LLM to ingest a site's HTML and output the SelectorMap object directly into your /sites/ directory.

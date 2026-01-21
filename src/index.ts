@@ -1,11 +1,10 @@
 import { chromium } from 'playwright'
-import { extractItems } from './extract/extractItems.js'
-import { navigate } from './navigation/navigate.js'
-import type { Item } from './types/Item.js'
+import { runSite } from './run.js'
 import { targetSite } from './sites/target.js'
 import fs from 'fs'
 
 const isHeadless = process.env.NODE_ENV !== 'development'
+
 const browser = await chromium.launch({ headless: isHeadless })
 
 const context = await browser.newContext({
@@ -18,25 +17,9 @@ const context = await browser.newContext({
 const page = await context.newPage()
 
 const query = 'pokemon cards'
-await navigate(
-    page,
-    targetSite.searchUrl.replace('{query}', encodeURIComponent(query)),
-    targetSite.selectors.card
-)
 
-const allItems: Item[] = []
+const items = await runSite(page, targetSite, query)
 
-for (;;) {
-    const items = await extractItems(page, targetSite.selectors)
-    allItems.push(...items)
+fs.writeFileSync('./data.json', JSON.stringify(items, null, 2))
 
-    const next = page.locator(targetSite.selectors.paginationNext)
-    if ((await next.getAttribute('disabled')) !== null) break
-
-    await Promise.all([next.click(), page.waitForTimeout(1500)])
-}
-
-fs.writeFileSync('./data.json', JSON.stringify(allItems, null, 2))
-
-console.log(allItems)
 await browser.close()
