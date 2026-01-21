@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        // Target modern Node.js runtime (Node 18+)
+        "target": "ES2022",
+        "module": "nodenext",
+        // Resolve imports using Node’s real ESM rules
+        "moduleResolution": "nodenext",
+        // Include modern JavaScript globals and browser DOM APIs
+        "lib": ["ESNext", "DOM"],
+        // Explicitly include Node.js global types (process, Buffer, fs, etc.)
+        "types": ["node"],
+        // Treat `src/` as the root of the project
+        // Prevents messy output paths
+        "rootDir": "src",
+        // Keeps source and output cleanly separated
+        "outDir": "dist",
+        "strict": true,
+        "sourceMap": true,
+        "skipLibCheck": true
+    },
+
+    "include": ["src"]
+}
