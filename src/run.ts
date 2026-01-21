@@ -3,6 +3,18 @@ import { navigate } from './navigation/navigate.js'
 import { extractItems } from './extract/extractItems.js'
 import type { Item } from './types/Item.js'
 
+/**
+ * Orchestrates the execution of a site-specific scraper.
+ *
+ * This function acts as the control layer between:
+ * - Navigation: loading pages and handling pagination.
+ * - Extraction: pulling item data from the loaded pages.
+ * @param page Playwright Page instance to perform actions on.
+ * @param site Site configuration including URLs and selectors.
+ * @param query Search query to be used in the site's search URL.
+ * @returns A promise that resolves to an array of extracted items.
+ */
+
 export async function runSite(
     page: Page,
     site: {
